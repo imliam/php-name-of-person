@@ -1,0 +1,43 @@
+{
+    "name": "imliam/php-name-of-person",
+    "description": "Present names for English-language applications.",
+    "keywords": [
+        "imliam",
+        "php-name-of-person"
+    ],
+    "homepage": "https://github.com/imliam/php-name-of-person",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Liam Hammett",
+            "email": "liam@liamhammett.com",
+            "homepage": "https://liamhammett.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImLiam\\NameOfPerson\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ImLiam\\NameOfPerson\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test:windows": "vendor\\bin\\phpunit",
+        "test-coverage:windows": "vendor\\bin\\phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
