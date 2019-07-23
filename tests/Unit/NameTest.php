@@ -72,4 +72,20 @@ class NameTest extends TestCase
 
         $this->assertEquals('Charles\'', $name->getPossessive());
     }
+
+    /** @test */
+    public function a_name_can_be_properly_capitalised()
+    {
+        $this->assertEquals('Michael O’Carrol', (new Name('michael o’carrol'))->getProperName());
+        $this->assertEquals('Lucas l’Amour', (new Name('lucas l’amour'))->getProperName());
+        $this->assertEquals('George d’Onofrio', (new Name('george d’onofrio'))->getProperName());
+        $this->assertEquals('William Stanley III', (new Name('william stanley iii'))->getProperName());
+        $this->assertEquals('United States of America', (new Name('UNITED STATES OF AMERICA'))->getProperName());
+        $this->assertEquals('T. von Lieres und Wilkau', (new Name('t. von lieres und wilkau'))->getProperName());
+        $this->assertEquals('Paul van der Knaap', (new Name('paul van der knaap'))->getProperName());
+        $this->assertEquals('Jean-Luc Picard', (new Name('jean-luc picard'))->getProperName());
+        $this->assertEquals('John McLaren', (new Name('JOHN MCLAREN'))->getProperName());
+        $this->assertEquals('Henric VIII', (new Name('hENRIC vIII'))->getProperName());
+        $this->assertEquals('Vasco da Gama', (new Name('VAsco da GAma'))->getProperName());
+    }
 }

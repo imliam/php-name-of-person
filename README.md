@@ -31,14 +31,21 @@ This is a rough port of [the Ruby package of the same name from Basecamp](https:
 You can install the package with [Composer](https://getcomposer.org/) using the following command:
 
 ```bash
-composer require imliam/php-name-of-person:^1.0.0
+composer require imliam/php-name-of-person:^1.1
 ```
 
 ## 📝 Usage
 
-``` php
-$name = new \ImLiam\NameOfPerson\Name('David Heinemeier Hansson');
+The package supplies a single class that can be instantiated with a string containing the original name of a person.
 
+The class has a handful of methods that can be called to return different variations of the supplied name.
+
+```php
+use ImLiam\NameOfPerson\Name;
+
+$name = new Name('David Heinemeier Hansson');
+
+$name->getFullName();       // "David Heinemeier Hansson"
 $name->getFirstName();      // "David"
 $name->getLastName();       // "Heinemeier Hansson"
 $name->getInitials();       // "DHH"
@@ -48,11 +55,21 @@ $name->getAbbreviated();    // "D. Heinemeier Hansson"
 $name->getSorted();         // "Heinemeier Hansson, David"
 $name->getMentionable();    // "davidh"
 $name->getPossessive();     // "David Heinemeier Hansson's"
+$name->getProperName();     // "David Heinemeier Hansson"
+```
+
+These methods take care to handle some of the situations that are often awkward to process and missed when handling names that come from user-input so aren't always reliable.
+
+One such example is that names with particles can be capitalised properly with the `getProperName()` method.
+
+```php
+(new Name("lucas l'amour"))->getProperName(); // "Lucas l'Amour"
+(new Name('t. von lieres und wilkau'))->getProperName(); // "T. von Lieres und Wilkau"
 ```
 
 ## ✅ Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -76,6 +93,7 @@ If you discover any security related issues, please email liam@liamhammett.com i
 
 - [Liam Hammett](https://github.com/imliam)
 - [Basecamp](https://github.com/basecamp/name_of_person) for the original Ruby gem
+- [Armand Niculescu](https://www.media-division.com/correct-name-capitalization-in-php/) for the logic to capitalise names with particles
 - [All Contributors](../../contributors)
 
 ## ♻️ License
