@@ -1,0 +1,40 @@
+name: ci
+
+on: [ push, pull_request ]
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest ]
+        php-versions: [ '7.4', '8.0', '8.1', '8.2' ]
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, zip
+          coverage: none
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Install dependencies for PHP 7
+        if: matrix.php-versions < '8.0'
+        run: composer update --prefer-lowest --no-interaction --prefer-source
+
+      - name: Install dependencies for PHP 8
+        if: matrix.php-versions >= '8.0'
+        run: composer update --no-interaction --prefer-source
+
+      - name: Run test suite
+        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+      - name: Upload clover to Scrutinizer CI for PHP 7.4
+        if: matrix.php-versions == '7.4'
+        run: wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
